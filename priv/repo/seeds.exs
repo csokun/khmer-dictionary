@@ -13,23 +13,17 @@ with {:ok, body} <- File.read("priv/db.json"),
      {:ok, records} <- Jason.decode(body) do
   records
   |> Enum.each(fn %{
-                    "level" => level,
-                    "ref" => ref,
                     "main" => main,
                     "subscript" => subscript,
                     "subword" => subword,
-                    "poly" => poly,
                     "pronunciation" => pronunciation,
                     "part_of_speech" => part_of_speech,
                     "definition" => definition
                   } ->
     Kd.Repo.insert!(%Kd.Word{
-      level: level,
-      ref: ref,
       main: main,
       subscript: subscript,
       subword: subword,
-      poly: poly,
       pronunciation: pronunciation,
       part_of_speech: part_of_speech,
       definition: definition

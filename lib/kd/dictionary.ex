@@ -3,11 +3,10 @@ defmodule Kd.Dictionary do
   alias Kd.Word
 
   def lookup(word) do
-    query =
-      from w in Word,
-        where: w.main == ^word,
-        select: w.definition
-
-    Kd.Repo.all(query)
+    from(d in Word,
+      select: [:main, :subword, :pronunciation, :part_of_speech, :definition, :example, :rank, :id],
+      where: fragment("words MATCH ?", ^word),
+      order_by: [asc: :rank])
+    |> Kd.Repo.all()
   end
 end
