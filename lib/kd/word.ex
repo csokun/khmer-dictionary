@@ -10,7 +10,5 @@ defmodule Kd.Word do
     field :part_of_speech, :string
     field :definition, :string
     field :example, :string
-
-    field :rank, :float, virtual: true
   end
 end

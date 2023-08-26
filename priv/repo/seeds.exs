@@ -18,6 +18,7 @@ with {:ok, body} <- File.read("priv/db.json"),
                     "subword" => subword,
                     "pronunciation" => pronunciation,
                     "part_of_speech" => part_of_speech,
+                    "example" => example,
                     "definition" => definition
                   } ->
     Kd.Repo.insert!(%Kd.Word{
@@ -26,6 +27,7 @@ with {:ok, body} <- File.read("priv/db.json"),
       subword: subword,
       pronunciation: pronunciation,
       part_of_speech: part_of_speech,
+      example: example,
       definition: definition
     })
   end)

@@ -18,6 +18,7 @@ defmodule KdWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    live "/home", HomeLive, :index
   end
 
   # Other scopes may use custom stacks.
