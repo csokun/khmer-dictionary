@@ -4,6 +4,7 @@ defmodule Kd.Dictionary do
 
   def lookup(word) do
     keyword = "#{word}%"
+
     from(d in Word,
       select: [
         :main,
@@ -14,7 +15,8 @@ defmodule Kd.Dictionary do
         :example,
         :id
       ],
-      where: fragment("(CASE WHEN subword = '' THEN main ELSE subword END) like ?", ^keyword)
+      where: fragment("(CASE WHEN subword = '' THEN main ELSE subword END) like ?", ^keyword),
+      order_by: fragment("(CASE WHEN subword = '' THEN main ELSE subword END) ASC")
     )
     |> Kd.Repo.all()
   end
