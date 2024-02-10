@@ -3,29 +3,15 @@ defmodule :"Elixir.Kd.Repo.Migrations.Add dict table" do
 
   def change do
     create table(:words) do
-      add :main, :string
-      add :subscript, :string
-      add :subword, :string
-      add :source, :string
-      add :poly, :string
+      add :level, :integer, default: 1
+      add :main, :string, size: 60
+      add :subscript, :string, size: 60
+      add :subword, :string, size: 60
       add :definition, :string
       add :example, :string
       add :pronunciation, :string
       add :part_of_speech, :string
+      add :note, :string
     end
-
-    # execute("""
-    #   CREATE VIRTUAL TABLE IF NOT EXISTS words USING fts5(
-    #     source UNINDEXED,
-    #     មីនpoly UNINDEXED,
-    #     subscript UNINDEXED,
-    #     part_of_speech UNINDEXED,
-    #     pronunciation UNINDEXED,
-    #     main,
-    #     definition UNINDEXED,
-    #     subword UNINDEXED,
-    #     example UNINDEXED,
-    #   );
-    # """)
   end
 end

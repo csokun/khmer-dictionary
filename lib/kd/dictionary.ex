@@ -12,11 +12,11 @@ defmodule Kd.Dictionary do
         :pronunciation,
         :part_of_speech,
         :definition,
-        :example,
-        :id
+        :note,
+        :example
       ],
-      where: fragment("(CASE WHEN subword = '' THEN main ELSE subword END) like ?", ^keyword),
-      order_by: fragment("(CASE WHEN subword = '' THEN main ELSE subword END) ASC")
+      where: like(d.main, ^keyword),
+      order_by: [asc: d.main, asc: d.level, asc: d.subscript]
     )
     |> Kd.Repo.all()
   end

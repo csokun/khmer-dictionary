@@ -41,21 +41,25 @@ defmodule SeedHelper do
   defp import_entries(entries) do
     entries
     |> Enum.each(fn %{
+                      "level" => level,
                       "main" => main,
                       "subscript" => subscript,
                       "subword" => subword,
                       "pronunciation" => pronunciation,
                       "part_of_speech" => part_of_speech,
                       "example" => example,
+                      "notes" => note,
                       "definition" => definition
                     } ->
       Kd.Repo.insert!(%Kd.Word{
+        level: level,
         main: main,
         subscript: subscript,
         subword: subword,
         pronunciation: pronunciation,
         part_of_speech: part_of_speech,
         example: example,
+        note: note,
         definition: definition
       })
     end)
