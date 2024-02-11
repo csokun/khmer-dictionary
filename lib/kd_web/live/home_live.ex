@@ -10,16 +10,20 @@ defmodule KdWeb.HomeLive do
     {:ok,
      socket
      |> assign(:query, "")
-     |> assign(:entries, AsyncResult.loading())}
+     |> assign(:entries, AsyncResult.loading()), temporary_assigns: [entries: []]}
   end
 
   def handle_params(params, _url, socket) do
     q = Map.get(params, "q", "")
 
-    {:noreply,
-     socket
-     |> assign(:query, q)
-     |> search(q)}
+    if q == socket.assigns.query do
+      {:noreply, socket}
+    else
+      {:noreply,
+       socket
+       |> assign(:query, q)
+       |> search(q)}
+    end
   end
 
   def handle_event("search", %{"q" => q}, socket) do
