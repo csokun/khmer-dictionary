@@ -14,7 +14,4 @@ defmodule KdWeb.HomeLive do
     Logger.info("Found #{length(results)} results")
     {:noreply, assign(socket, :entries, results)}
   end
-
-  def get_word(%{subword: subword, main: main}) when subword == "", do: main
-  def get_word(%{subword: word}), do: word
 end

@@ -36,7 +36,7 @@
 >
   <div>
     <span class="font-bold">
-      <%= get_word(entry) %>
+      <%= entry.main %>
     </span>
     <span :if={entry.part_of_speech != ""} class="text-gray-600">
       [ <%= entry.part_of_speech %> ]
