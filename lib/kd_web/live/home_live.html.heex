@@ -24,32 +24,44 @@
         placeholder=""
         name="q"
         id="q"
+        phx-debounce="1000"
         value={@query}
       />
     </form>
   </div>
 </div>
 
-<div
-  :for={entry <- @entries}
-  class="flex flex-col p-4 space-y-2 hover:bg-gray-100 hover:rounded-md"
->
-  <div>
-    <span class="font-bold">
-      <%= entry.main %>
-    </span>
-    <span :if={entry.part_of_speech != ""} class="text-gray-600">
-      [ <%= entry.part_of_speech %> ]
-    </span>
-  </div>
+<.async_result :let={entries} assign={@entries}>
+  <div
+    :for={entry <- entries}
+    class="flex flex-col p-4 space-y-2 hover:bg-gray-100 hover:rounded-md"
+  >
+    <div class="flex gap-2">
+      <div class="font-bold">
+        <%= entry.main %>
+      </div>
+      <div :if={entry.part_of_speech != ""} class="text-gray-600">
+        [ <%= entry.part_of_speech %> ]
+      </div>
+      <div :if={entry.pronunciation != ""}>
+        <span class="text-gray-600">អានថា៖</span>
+        <%= entry.pronunciation %>
+      </div>
+    </div>
 
-  <p><%= entry.definition %></p>
-  <div :if={entry.example != ""}>
-    <span class="text-gray-600">ឧទាហរណ៍៖</span>
-    <%= entry.example %>
+    <p>
+      <%= entry.definition %>
+      <span class="text-gray-600">
+        <%= entry.example %>
+      </span>
+    </p>
+
+    <div class="flex gap-2">
+      <div :for={sub <- entry.subwords}>
+        <div class="rounded-md px-2 py-1 text-gray-600 bg-gray-300 hover:bg-gray-400 hover:text-white">
+          <%= sub["main"] %>
+        </div>
+      </div>
+    </div>
   </div>
-  <div :if={entry.pronunciation != ""}>
-    <span class="text-gray-600">អានថា៖</span>
-    <%= entry.pronunciation %>
-  </div>
-</div>
+</.async_result>

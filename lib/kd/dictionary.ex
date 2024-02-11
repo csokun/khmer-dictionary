@@ -8,6 +8,7 @@ defmodule Kd.Dictionary do
         on: c.level == 2 and r.main == c.main and r.subscript == c.subscript,
         where: like(r.main, ^word) and r.level == 1 and r.subword == "",
         group_by: [
+          r.id,
           r.main,
           r.subscript,
           r.part_of_speech,
@@ -17,6 +18,7 @@ defmodule Kd.Dictionary do
           r.pronunciation
         ],
         select: %{
+          id: r.id,
           main: r.main,
           subscript: r.subscript,
           part_of_speech: r.part_of_speech,
@@ -48,7 +50,9 @@ defmodule Kd.Dictionary do
 
     Kd.Repo.all(query)
     |> Enum.map(fn row ->
-      Map.put(row, :subwords, Jason.decode!(row.subwords))
+      row
+      |> Map.put(:subwords, Jason.decode!(row.subwords))
+      |> Map.put(:id, row.id)
     end)
   end
 end

@@ -12,6 +12,7 @@ config :kd,
 
 # Configures the endpoint
 config :kd, KdWeb.Endpoint,
+  adapter: Bandit.PhoenixAdapter,
   url: [host: "localhost"],
   render_errors: [
     formats: [html: KdWeb.ErrorHTML, json: KdWeb.ErrorJSON],
