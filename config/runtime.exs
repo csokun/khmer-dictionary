@@ -48,9 +48,9 @@ if config_env() == :prod do
   port = String.to_integer(System.get_env("PORT") || "4000")
 
   config :kd, KdWeb.Endpoint,
-    url: [host: host, port: 443, scheme: "http"],
+    url: [host: host, port: port, scheme: "http"],
     http: [
-     ip: {0, 0, 0, 0},
+      ip: {0, 0, 0, 0},
       port: port
     ],
     secret_key_base: secret_key_base
