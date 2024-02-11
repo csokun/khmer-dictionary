@@ -4,6 +4,8 @@ defmodule KdWeb.HomeLive do
 
   require Logger
 
+  embed_templates "home_live/*"
+
   def mount(_params, _session, socket) do
     {:ok,
      socket
@@ -34,5 +36,15 @@ defmodule KdWeb.HomeLive do
     |> assign_async(:entries, fn ->
       {:ok, %{entries: Kd.Dictionary.lookup("#{q}%")}}
     end)
+  end
+
+  def toggle_subword(js \\ %JS{}, id) do
+    btn_class = "bg-sky-500 text-white"
+
+    js
+    |> JS.remove_class(btn_class, to: ".subword-btn")
+    |> JS.add_class(btn_class, to: "#subword-#{id}-btn")
+    |> JS.hide(to: ".subword")
+    |> JS.show(to: "#subword-#{id}")
   end
 end

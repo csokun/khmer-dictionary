@@ -1,0 +1,19 @@
+<div class="flex gap-2">
+  <div class="font-bold">
+    <%= @main %>
+  </div>
+  <div :if={@part_of_speech != ""} class="text-gray-600">
+    [ <%= @part_of_speech %> ]
+  </div>
+  <div :if={@pronunciation != ""}>
+    <span class="text-gray-600">អានថា៖</span>
+    <%= @pronunciation %>
+  </div>
+</div>
+
+<p>
+  <%= @definition %>
+  <span class="text-gray-600">
+    <%= @example %>
+  </span>
+</p>

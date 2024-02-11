@@ -1,4 +1,4 @@
-<div class="h-18 px-4 py-4 sticky top-0 w-full bg-slate-100 flex flex-row">
+<div class="h-18 px-4 py-4 sticky top-0 w-full bg-slate-400 flex flex-row mb-4">
   <h1 class="text-4xl mr-4">វចនានុក្រមខ្មែរ</h1>
   <div class="relative w-64">
     <form phx-submit="search">
@@ -34,34 +34,38 @@
 <.async_result :let={entries} assign={@entries}>
   <div
     :for={entry <- entries}
-    class="flex flex-col p-4 space-y-2 hover:bg-gray-100 hover:rounded-md"
+    class="flex flex-col p-4 space-y-2 hover:bg-sky-200 hover:rounded-md"
   >
-    <div class="flex gap-2">
-      <div class="font-bold">
-        <%= entry.main %>
-      </div>
-      <div :if={entry.part_of_speech != ""} class="text-gray-600">
-        [ <%= entry.part_of_speech %> ]
-      </div>
-      <div :if={entry.pronunciation != ""}>
-        <span class="text-gray-600">អានថា៖</span>
-        <%= entry.pronunciation %>
+    <.entry
+      main={entry.main}
+      definition={entry.definition}
+      part_of_speech={entry.part_of_speech}
+      pronunciation={entry.pronunciation}
+      example={entry.example}
+    />
+    <div class="flex flex-row gap-2 w-full flex-wrap">
+      <div
+        :for={sub <- entry.subwords}
+        class="subword-btn rounded-md px-4 py-1 text-md text-gray-600 bg-gray-300 hover:bg-sky-500 hover:text-white cursor-pointer"
+        id={"subword-#{sub["id"]}-btn"}
+        phx-click={toggle_subword(sub["id"])}
+      >
+        <%= sub["main"] %>
       </div>
     </div>
 
-    <p>
-      <%= entry.definition %>
-      <span class="text-gray-600">
-        <%= entry.example %>
-      </span>
-    </p>
-
-    <div class="flex gap-2 flex-wrap">
-      <div :for={sub <- entry.subwords}>
-        <div class="rounded-md px-4 py-1 text-md text-gray-600 bg-gray-300 hover:bg-gray-400 hover:text-white">
-          <%= sub["main"] %>
-        </div>
-      </div>
+    <div
+      :for={sub <- entry.subwords}
+      class="subword hidden pl-4 rounded-md border-[1px] py-2 border-sky-400 bg-sky-300 hover:border-sky-500 hover:bg-sky-400"
+      id={"subword-#{sub["id"]}"}
+    >
+      <.entry
+        main={sub["main"]}
+        definition={sub["definition"]}
+        part_of_speech={sub["part_of_speech"]}
+        pronunciation={sub["pronunciation"]}
+        example={sub["example"]}
+      />
     </div>
   </div>
 </.async_result>

@@ -30,6 +30,7 @@ defmodule Kd.Dictionary do
             fragment(
               "json_group_array(
                 json_object(
+                  'id', ?,
                   'main', ?,
                   'definition', ?,
                   'example', ?,
@@ -38,6 +39,7 @@ defmodule Kd.Dictionary do
                   'note', ?
                 )
               ) filter (where ? is not null)",
+              c.id,
               c.subword,
               c.definition,
               c.example,
