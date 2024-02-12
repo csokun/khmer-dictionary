@@ -17,6 +17,8 @@ defmodule KdWeb.Router do
   scope "/", KdWeb do
     pipe_through :browser
 
+    get "/speech/:text", SpeechController, :index
+
     live "/", HomeLive, :index
   end
 

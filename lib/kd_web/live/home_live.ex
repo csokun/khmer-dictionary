@@ -26,6 +26,12 @@ defmodule KdWeb.HomeLive do
     end
   end
 
+  def handle_event("speak", %{"text" => text}, socket) do
+    {:noreply,
+     socket
+     |> push_event("play", %{audio: ~p"/speech/#{text}"})}
+  end
+
   def handle_event("search", %{"q" => q}, socket) do
     {:noreply, socket |> push_patch(to: ~p"/?q=#{q}")}
   end
