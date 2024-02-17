@@ -1,7 +1,7 @@
 export default {
     mounted() {
-        this.handleEvent("play", ({ text }) => {
-            const audio =  new Audio(`http://localhost:3000/${text}`)
+        this.handleEvent("play", ({ url }) => {
+            const audio =  new Audio(url)
             audio.play();
         });
     }

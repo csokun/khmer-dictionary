@@ -27,9 +27,11 @@ defmodule KdWeb.HomeLive do
   end
 
   def handle_event("speak", %{"text" => text}, socket) do
+    tts_base_url = System.get_env("TTS_BASE_URL", "http://localhost:3000")
+
     {:noreply,
      socket
-     |> push_event("play", %{text: text})}
+     |> push_event("play", %{url: "#{tts_base_url}/#{text}"})}
   end
 
   def handle_event("search", %{"q" => q}, socket) do
