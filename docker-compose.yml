@@ -1,0 +1,13 @@
+version: "3.8"
+services:
+  tts:
+    image: "csokun/klea-js:latest"
+    ports:
+      - "3000:3000"
+
+  dictionary:
+    image: "csokun/khmer-dictionary:tts"
+    ports:
+      - "4000:4000"
+    environment:
+      SECRET_KEY_BASE: "/4mSfOc6jCMveCINKAkJmCyWMsIa+xzIKF9zqaePbwNlwkZSuFDqMxhhWYdy77et"

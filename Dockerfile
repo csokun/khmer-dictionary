@@ -11,9 +11,9 @@
 #   - https://pkgs.org/ - resource for finding needed packages
 #   - Ex: hexpm/elixir:1.15.4-erlang-26.0.2-debian-bullseye-20230612-slim
 #
-ARG ELIXIR_VERSION=1.15.4
-ARG OTP_VERSION=26.0.2
-ARG DEBIAN_VERSION=bullseye-20230612-slim
+ARG ELIXIR_VERSION=1.16.1
+ARG OTP_VERSION=26.2.2
+ARG DEBIAN_VERSION=buster-20240130-slim
 
 ARG BUILDER_IMAGE="hexpm/elixir:${ELIXIR_VERSION}-erlang-${OTP_VERSION}-debian-${DEBIAN_VERSION}"
 ARG RUNNER_IMAGE="debian:${DEBIAN_VERSION}"
@@ -70,6 +70,12 @@ RUN SECRET_KEY_BASE=dummy mix ecto.setup
 FROM ${RUNNER_IMAGE}
 
 RUN apt-get update -y && apt-get install -y libstdc++6 openssl libncurses5 locales \
+  && apt-get clean && rm -f /var/lib/apt/lists/*_*
+
+# install nodejs 20
+RUN apt-get update -y && apt-get install -y curl gnupg \
+  && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+  && apt-get install -y nodejs \
   && apt-get clean && rm -f /var/lib/apt/lists/*_*
 
 # Set the locale
