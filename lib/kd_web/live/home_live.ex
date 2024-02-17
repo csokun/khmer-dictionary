@@ -29,7 +29,7 @@ defmodule KdWeb.HomeLive do
   def handle_event("speak", %{"text" => text}, socket) do
     {:noreply,
      socket
-     |> push_event("play", %{audio: ~p"/speech/#{text}"})}
+     |> push_event("play", %{text: text})}
   end
 
   def handle_event("search", %{"q" => q}, socket) do

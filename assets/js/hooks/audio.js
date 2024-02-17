@@ -1,7 +1,8 @@
 export default {
     mounted() {
-        this.handleEvent("play", (payload) => {
-            console.log("play", payload)
+        this.handleEvent("play", ({ text }) => {
+            const audio =  new Audio(`http://localhost:3000/${text}`)
+            audio.play();
         });
     }
 }
