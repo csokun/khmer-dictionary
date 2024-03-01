@@ -17,25 +17,27 @@ defmodule KdWeb.HomeLive do
     q = Map.get(params, "q", "")
 
     if q == socket.assigns.query do
-      {:noreply, socket}
+      socket
     else
-      {:noreply,
-       socket
-       |> assign(:query, q)
-       |> search(q)}
+      socket
+      |> assign(:query, q)
+      |> search(q)
     end
+    |> noreply()
   end
 
   def handle_event("speak", %{"text" => text}, socket) do
     tts_base_url = System.get_env("TTS_BASE_URL", "http://localhost:3000")
 
-    {:noreply,
-     socket
-     |> push_event("play", %{url: "#{tts_base_url}/#{text}"})}
+    socket
+    |> push_event("play", %{url: "#{tts_base_url}/#{text}"})
+    |> noreply()
   end
 
   def handle_event("search", %{"q" => q}, socket) do
-    {:noreply, socket |> push_patch(to: ~p"/?q=#{q}")}
+    socket
+    |> push_patch(to: ~p"/?q=#{q}")
+    |> noreply()
   end
 
   defp search(socket, "") do
